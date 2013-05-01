@@ -1,0 +1,12 @@
+# robots.txt
+
+User-Agent: Googlebot-Image
+Disallow: /
+
+# The Internet Archive: www.archive.org
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: *
+Disallow: /
+

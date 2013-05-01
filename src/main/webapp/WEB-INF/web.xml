@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="MessAdmin_UpdateServer_WebApp" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>MessAdmin-UpdateServer</display-name>
+	<distributable/>
+
+	<!--filter>
+		<!- - MessAdmin Servlet Filter - ->
+		<filter-name>MessAdminFilter</filter-name>
+		<filter-class>clime.messadmin.filter.MessAdminFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MessAdminFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<!- - MessAdmin listener - ->
+		<listener-class>clime.messadmin.core.MessAdminListener</listener-class>
+	</listener-->
+
+	<listener>
+		<listener-class>fr.cedrik.messadmin.update.server.Log4JListener</listener-class>
+	</listener>
+
+	<!--servlet>
+		<!- - MessAdmin Servlet - ->
+		<servlet-name>MessAdminServlet</servlet-name>
+		<servlet-class>clime.messadmin.admin.MessAdminServlet</servlet-class>
+		<init-param>
+			<param-name>AuthorizationPassword</param-name>
+			<param-value>maus</param-value>
+		</init-param>
+		<load-on-startup>-1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MessAdminServlet</servlet-name>
+		<url-pattern>/messadmin</url-pattern>
+	</servlet-mapping-->
+
+	<servlet>
+		<!-- MessAdmin Update Servlet -->
+		<servlet-name>MessAdminUpdateServlet</servlet-name>
+		<servlet-class>fr.cedrik.messadmin.update.server.UpdateServerServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MessAdminUpdateServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
