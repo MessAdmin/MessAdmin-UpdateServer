@@ -3,6 +3,7 @@
  */
 package fr.cedrik.messadmin.update.server;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,6 +19,7 @@ import org.apache.log4j.Logger;
 /**
  * @author C&eacute;drik LIME
  */
+@SuppressWarnings("serial")
 public class UpdateServerServlet extends HttpServlet {
 	protected static final String HEADER_IFMODSINCE   = "If-Modified-Since";
 	protected static final String HEADER_LASTMOD      = "Last-Modified";
@@ -32,16 +34,19 @@ public class UpdateServerServlet extends HttpServlet {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void init() throws ServletException {
 		super.init();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void destroy() {
 		super.destroy();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (ROBOTS_TXT.equals(request.getPathInfo())) {
 			// serve robots.txt file
@@ -74,8 +79,17 @@ public class UpdateServerServlet extends HttpServlet {
 		try {
 			copy(input, output);
 		} finally {
-			input.close();
-			output.close();
+			closeQuietly(input);
+			closeQuietly(output);
+		}
+	}
+
+	private static void closeQuietly(Closeable closeable) {
+		try {
+			if (closeable != null) {
+				closeable.close();
+			}
+		} catch (IOException ignore) {
 		}
 	}
 
@@ -83,7 +97,9 @@ public class UpdateServerServlet extends HttpServlet {
 	 * {@inheritDoc}
 	 * Pre-flight request
 	 */
+	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		@SuppressWarnings("unused")
 		String requestedMethod  = request.getHeader("Access-Control-Request-Method");
 		String requestedHeaders = request.getHeader("Access-Control-Request-Headers");
 
@@ -98,6 +114,7 @@ public class UpdateServerServlet extends HttpServlet {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected void doHead(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
 		log.info(path);

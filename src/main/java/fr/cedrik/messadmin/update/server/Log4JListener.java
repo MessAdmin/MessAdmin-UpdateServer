@@ -20,21 +20,25 @@ public class Log4JListener implements ServletContextListener, ServletRequestList
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		//org.apache.log4j.PropertyConfigurator.configure("log4j.properties");
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		LogManager.shutdown();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void requestInitialized(ServletRequestEvent sre) {
 		NDC.push(sre.getServletRequest().getRemoteHost());
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void requestDestroyed(ServletRequestEvent sre) {
 		NDC.pop();
 		if (NDC.getDepth() == 0) {
