@@ -117,7 +117,9 @@ public class UpdateServerServlet extends HttpServlet {
 	@Override
 	protected void doHead(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
-		log.info(path);
+		//String referer = request.getHeader("Referer");
+		String origin = request.getHeader("Origin"); // does not include any path information, only the server name
+		log.info(path + '\t' + origin);
 		response.setHeader("Access-Control-Allow-Origin", "*");// This is the critical part
 		setCache(response, 24);
 
