@@ -55,29 +55,28 @@
 		<maven.compiler.target>1.6</maven.compiler.target>
 	</properties>
 
-	<!--build>
+	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<webXml>${maven.war.webxml}</webXml>
-					<webResources>
-						<resource>
-							<!- - this is relative to the pom.xml directory - ->
-							<directory>resource2</directory>
-							<targetPath>WEB-INF</targetPath><!- - By default web resources are copied to the root of the war - ->
-						</resource>
-					</webResources>
-					<warSourceExcludes>
-					</warSourceExcludes>
-					<archiver>
-						<manifest_entry>value</manifest_entry>
-					</archiver>
+					<includeEmptyDirectories>true</includeEmptyDirectories>
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
+						<manifestEntries>
+							<!--manifest_entry>value</manifest_entry-->
+						</manifestEntries>
 					</archive>
+					<warSourceExcludes>**/.gitignore,**/.empty,**/.emptydir</warSourceExcludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
 				</configuration>
 			</plugin>
 		</plugins>
-	</build-->
+	</build>
+
 </project>
